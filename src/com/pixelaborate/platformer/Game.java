@@ -27,18 +27,16 @@ public class Game {
 			Display.setTitle("dank memes");
 			Display.create();
 			
-			Display.sync(60);
+			Display.sync(60);//set fps of gameßœq
 	
 			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity(); // Resets any previous projection matrices
+			glLoadIdentity(); 
 			glOrtho(0, 640, 480, 0, 1, -1);
 			glMatrixMode(GL_MODELVIEW);
 	
 	
 			glClear(GL_COLOR_BUFFER_BIT);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-	
 		} catch (LWJGLException e) {
 			System.err.println("Error");
 			System.exit(1);
@@ -52,5 +50,7 @@ public class Game {
 			currentState.input();
 			currentState.update();
 		}
+		
+		System.exit(0);
 	}
 }
