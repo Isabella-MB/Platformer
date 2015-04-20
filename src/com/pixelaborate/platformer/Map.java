@@ -20,10 +20,7 @@ public class Map {
 	String filePathTextureMap;
 	private static float[][] data;
 
-	public Map() {
-
-	}
-
+	
 	public Map (String height,String texture) {
 		filePathHeightMap = height;
 		filePathTextureMap = texture;

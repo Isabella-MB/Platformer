@@ -27,7 +27,7 @@ public class Game {
 			Display.setTitle("dank memes");
 			Display.create();
 			
-			Display.sync(60);//set fps of gameßœq
+			Display.sync(60);//set fps of game
 	
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity(); 
