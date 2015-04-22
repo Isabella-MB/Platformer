@@ -16,7 +16,19 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jars/slick-util.jar">
 		<attributes>
+			<attribute name="javadoc_location" value="http://slick.ninjacave.com/javadoc/"/>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Platformer/lib/natives"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/jars/jinput.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://slick.ninjacave.com/javadoc/"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Platformer/lib/natives"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/jars/slick.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://slick.ninjacave.com/javadoc/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>

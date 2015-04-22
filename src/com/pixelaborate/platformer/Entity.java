@@ -154,7 +154,7 @@ public class Entity {
 	        glEnable(GL_DEPTH_TEST);
 	        glEnable(GL_LIGHTING);
 	        glEnable(GL_LIGHT0);
-	        glLightModel(GL_LIGHT_MODEL_AMBIENT, BufferTools.asFlippedFloatBuffer(new float[]{0.5f, 0.5f, 0.5f, 1f}));
+	        glLightModel(GL_LIGHT_MODEL_AMBIENT, BufferTools.asFlippedFloatBuffer(new float[]{0.05f, 0.05f, 0.05f, 1f}));
 	        glLight(GL_LIGHT0, GL_POSITION, BufferTools.asFlippedFloatBuffer(new float[]{0, 0, 0, 1}));
 	        glEnable(GL_CULL_FACE);
 	        glCullFace(GL_BACK);
