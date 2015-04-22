@@ -2,11 +2,13 @@ package com.pixelaborate.platformer;
 
 
 import org.lwjgl.LWJGLException;
+
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.vector.Vector3f;
 
+import utility.BufferTools;
 import utility.Camera;
 import utility.EulerCamera;
 import utility.Model;
@@ -72,11 +74,10 @@ public class Entity {
 		}
 	}
 
-
-	private static void setUpDisplayLists() {//draw model to screen
+	private static void setUpDisplayLists() { //draw model to screen
 		vertexList = glGenLists(1);
 		glNewList(vertexList, GL_COMPILE);
-		{
+		
 			Model m = null;
 			try {
 
@@ -109,7 +110,7 @@ public class Entity {
 				glVertex3f(v3.x, v3.y, v3.z);
 			}
 			glEnd();
-		}
+		
 		glEndList();
 	}
 
@@ -117,6 +118,7 @@ public class Entity {
 		initializeDisplay();
 		setUpDisplayLists();
 		initializeCamera();
+		initializeLighting();
 		while (!Display.isCloseRequested()) {
 			render();
 			checkInput();
@@ -145,4 +147,18 @@ public class Entity {
 		glDeleteLists(vertexList, 1);
 		Display.destroy();
 	}
+	
+	
+	 private static void initializeLighting() {
+	        glShadeModel(GL_SMOOTH);
+	        glEnable(GL_DEPTH_TEST);
+	        glEnable(GL_LIGHTING);
+	        glEnable(GL_LIGHT0);
+	        glLightModel(GL_LIGHT_MODEL_AMBIENT, BufferTools.asFlippedFloatBuffer(new float[]{0.5f, 0.5f, 0.5f, 1f}));
+	        glLight(GL_LIGHT0, GL_POSITION, BufferTools.asFlippedFloatBuffer(new float[]{0, 0, 0, 1}));
+	        glEnable(GL_CULL_FACE);
+	        glCullFace(GL_BACK);
+	        glEnable(GL_COLOR_MATERIAL);
+	        glColorMaterial(GL_FRONT, GL_DIFFUSE);
+	    }
 }

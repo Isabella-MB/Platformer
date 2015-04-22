@@ -11,11 +11,11 @@ public class Main {
 	
 	public static void main(String args[]) {
 		
-		//Heightmap h = new Heightmap("images/heightmap.bmp");
-		//Entity e = new Entity();
+//		Map h = new Map("images/heightmap.bmp", "images/heightmap.bmp");
+//		//Entity e = new Entity();
 		Game game1 = new Game();
 		game1.run();
-		//System.out.println(h.getColorData());
+//		//System.out.println(h.getColorData());
 	}
 	
 }

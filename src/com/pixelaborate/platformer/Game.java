@@ -4,14 +4,19 @@ import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.glVertex2d;
+import static org.lwjgl.opengl.GL11.glVertex2i;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
 
 public class Game {
 	
@@ -20,7 +25,7 @@ public class Game {
 
 	public Game()
 	{
-		currentState = new PlayingState();
+		currentState = new MenuState();
 		
 		try {
 			Display.setDisplayMode(new DisplayMode(700, 520));
@@ -28,15 +33,22 @@ public class Game {
 			Display.create();
 			
 			Display.sync(60);//set fps of game
+			
 	
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity(); 
 			glOrtho(0, 640, 480, 0, 1, -1);
 			glMatrixMode(GL_MODELVIEW);
 	
-	
-			glClear(GL_COLOR_BUFFER_BIT);
+			
+			
+			
+			
+			
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			
+			
 		} catch (LWJGLException e) {
 			System.err.println("Error");
 			System.exit(1);
@@ -46,6 +58,10 @@ public class Game {
 	public void run()
 	{
 		while (!Display.isCloseRequested()) {
+		
+			Display.update();
+			
+			
 			currentState.render();
 			currentState.input();
 			currentState.update();
