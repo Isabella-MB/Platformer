@@ -21,9 +21,6 @@ public class PlayingState extends GameState {
 
 	public PlayingState(Game game) {
 		super(game);
-
-		getGame().makeWindow(this);
-
 	}
 
 

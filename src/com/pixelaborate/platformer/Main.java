@@ -5,7 +5,7 @@ public class Main {
 //		Map h = new Map("images/heightmap.bmp", "images/heightmap.bmp");
 //		//Entity e = new Entity();
 		Game game1 = new Game();
-		//game1.run();
+		game1.run();
 		
 		
 		

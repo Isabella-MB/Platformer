@@ -10,6 +10,7 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
@@ -24,20 +25,24 @@ public class Game {
 		currentState = new MenuState(this);
 	}
 
-	public void makeWindow(GameState g) {
+	public void run() {
 		try {
 
-			//System.setProperty ("org.lwjgl.opengl.Window.undecorated" , "true" ) ;
+			System.setProperty ("org.lwjgl.opengl.Window.undecorated" , "true" ) ;
 
 			Display.setDisplayMode(new DisplayMode(700, 520));
-			Display.setTitle(g.getClass().getSimpleName());
+			Display.setTitle(currentState.getClass().getSimpleName());
 			Display.create();
 
-			Display.sync(60);//set fps of game
-
+			
+		//if(Mouse.isGrabbed() && Mouse.isInsideWindow())
+			Mouse.setGrabbed(true);
+			
+		 
+		    
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity(); 
-			glOrtho(0, 640, 480, 0, 1, -1);
+			glOrtho((float)0, (float)700, (float)520, (float)0,(float) 1, (float)-1);
 			glMatrixMode(GL_MODELVIEW);
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -49,12 +54,12 @@ public class Game {
 
 		while (!Display.isCloseRequested()) {
 			Display.update();
-			Display.sync(60);
+			Display.sync(60);//sets fps of game. MUST REMAIN HERE FOR SCREEN TO CLEAR
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			
-			g.render();
-			g.input();
-			g.update();
+			currentState.render();
+			currentState.input();
+			currentState.update();
 			
 			
 		}
@@ -65,11 +70,8 @@ public class Game {
 
 
 	public void changeState(GameState a) {
-
-		//Display.destroy();
 		lastState = currentState;
 		currentState = a;
-
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		System.out.println("change state");
 

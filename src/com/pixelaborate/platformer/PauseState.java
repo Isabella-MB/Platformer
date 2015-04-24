@@ -4,7 +4,6 @@ public class PauseState extends GameState {
 
 	public PauseState(Game game) {
 		super(game);
-		getGame().makeWindow(this);
 	}
 
 	@Override
