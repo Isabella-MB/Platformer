@@ -22,7 +22,7 @@ public class Game {
 
 	public Game()
 	{
-		currentState = new MenuState(this);
+		
 	}
 
 	public void run() {
@@ -31,12 +31,12 @@ public class Game {
 			System.setProperty ("org.lwjgl.opengl.Window.undecorated" , "true" ) ;
 
 			Display.setDisplayMode(new DisplayMode(700, 520));
-			Display.setTitle(currentState.getClass().getSimpleName());
+//			Display.setTitle(currentState.getClass().getSimpleName());
 			Display.create();
 
 			
 		//if(Mouse.isGrabbed() && Mouse.isInsideWindow())
-			Mouse.setGrabbed(true);
+			Mouse.setGrabbed(true); //removes the mouse from the screen. When running the program(pressing the green and white arrow in eclipse), be sure to move the mouse away from the button, otherwise each click the user makes will cause the program to restart 
 			
 		 
 		    
@@ -46,8 +46,11 @@ public class Game {
 			glMatrixMode(GL_MODELVIEW);
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		} catch (LWJGLException e) {
+			
+			currentState = new MenuState(this);
+		}
+		
+		catch (LWJGLException e) {
 			System.err.println("Error");
 			System.exit(1);
 		}
@@ -75,5 +78,14 @@ public class Game {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		System.out.println("change state");
 
+	}
+	
+	public void goToLastState(GameState a) {
+	
+		currentState = lastState;
+		lastState = a;
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		System.out.println("change state to last state");
+		
 	}
 }

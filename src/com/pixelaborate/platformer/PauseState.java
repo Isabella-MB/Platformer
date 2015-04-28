@@ -1,5 +1,7 @@
 package com.pixelaborate.platformer;
 
+import org.lwjgl.input.Keyboard;
+
 public class PauseState extends GameState {
 
 	public PauseState(Game game) {
@@ -8,7 +10,11 @@ public class PauseState extends GameState {
 
 	@Override
 	public void input() {
-		// TODO Auto-generated method stub
+		if (Keyboard.isKeyDown(Keyboard.KEY_P)) {
+			System.out.println("p pressed");
+			getGame().goToLastState(this);
+		}
+
 		
 	}
 

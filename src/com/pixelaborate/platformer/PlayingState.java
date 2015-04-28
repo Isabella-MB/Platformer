@@ -13,6 +13,8 @@ import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glVertex2d;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -27,7 +29,10 @@ public class PlayingState extends GameState {
 
 	@Override
 	public void input() {
-		// TODO Auto-generated method stub
+		if (Keyboard.isKeyDown(Keyboard.KEY_P)) {
+			System.out.println("p pressed");
+			getGame().changeState(new PauseState(getGame()));
+		}
 
 	}
 
@@ -40,12 +45,13 @@ public class PlayingState extends GameState {
 	@Override
 	public void render() {
 
-		GL11.glColor3f(0.0f,0.8f, 0.0f);
-		glBegin(GL11.GL_QUADS);
-		glVertex2d(70,220);
-		glVertex2d(70,280);
-		glVertex2d(170,280);
-		glVertex2d(170,220);
+		GL11.glColor3f((float)(Math.random()),(float)(Math.random()),(float)(Math.random()));
+
+
+		glBegin(GL11.GL_TRIANGLES);
+		glVertex2d(Mouse.getX(), 520-Mouse.getY());
+		glVertex2d(Mouse.getX()-5, 520-Mouse.getY() + 20);
+		glVertex2d(Mouse.getX()+5, 520-Mouse.getY() + 20);
 		glEnd();
 	}
 }
