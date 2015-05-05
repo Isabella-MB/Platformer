@@ -21,8 +21,17 @@ import org.lwjgl.opengl.GL11;
 
 public class PlayingState extends GameState {
 
+	private Entity e;
+	private Model m;
 	public PlayingState(Game game) {
 		super(game);
+		e = new Entity();
+		
+		
+		OBJ_Parser p = new OBJ_Parser();
+		 m = p.parseOBJ();
+		
+		
 	}
 
 
@@ -48,11 +57,12 @@ public class PlayingState extends GameState {
 		GL11.glColor3f((float)(Math.random()),(float)(Math.random()),(float)(Math.random()));
 
 
-		glBegin(GL11.GL_TRIANGLES);
-		glVertex2d(Mouse.getX(), 520-Mouse.getY());
-		glVertex2d(Mouse.getX()-5, 520-Mouse.getY() + 20);
-		glVertex2d(Mouse.getX()+5, 520-Mouse.getY() + 20);
-		glEnd();
+		
+		
+		m.render();
+		
+		
+		e.render();
 	}
 }
 
