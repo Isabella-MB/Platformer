@@ -1,7 +1,8 @@
 package com.pixelaborate.platformer;
 
-import java.io.File;
-import java.io.IOException;
+
+
+
 
 public class Main {
 
@@ -11,10 +12,12 @@ public class Main {
 		Game game1 = new Game();
 		game1.run();
 		
-		OBJ_Parser b = new OBJ_Parser("res/models/Rock.obj");
+		//OBJ_Parser b = new OBJ_Parser("res/models/Rock.obj");
 		
-		System.out.println(b.parseOBJ());
+		//Model m = b.parseOBJ();
+		//m.render();
 		
 //		//System.out.println(h.getColorData());
+		
 	}
 }

@@ -1,12 +1,15 @@
 package com.pixelaborate.platformer;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+
+
 
 public class OBJ_Parser {
 
@@ -23,7 +26,7 @@ public class OBJ_Parser {
 	}
 
 	public OBJ_Parser() {
-		path = "res/models/Rock.obj";
+		path = "res/models/lumberJack.obj";
 	}
 
 
@@ -43,12 +46,17 @@ public class OBJ_Parser {
 
 	public Model parseOBJ(String p) throws Exception{
 
-		
-			return parseFile(new File(p));
-		
 
+		try {
+		return parseFile(new File(p));
+		}
+
+		catch(Exception e) {
+			System.out.println("error occured while parsing .obj file");
+			e.printStackTrace();
+		}
+		return new Model();
 		
-		//return new Model();
 	}
 
 	public Model parseFile(File f) throws IOException {
@@ -82,12 +90,12 @@ public class OBJ_Parser {
 
 				case FACE:
 
-				//IMPLEMENT
+					m.addFace(parseFace(m.hasNormals(), line));
 					break;
 
 			default:
 
-				throw new RuntimeException("Line " + lineCount + " Cannot be parsed:" + line);
+				//throw new RuntimeException("Line " + lineCount + " Cannot be parsed:" + line);
 
 			}
 			//System.out.println(lineCount++);
@@ -111,6 +119,21 @@ public class OBJ_Parser {
 		return new Vector2f(Float.valueOf(XY[1]), Float.valueOf(XY[2]));
 	}
 	
+	
+	 private static Face parseFace(boolean hasNormals, String line) {
+	        String[] faceIndices = line.split(" ");
+	        int[] vertexIndicesArray = {Integer.parseInt(faceIndices[1].split("/")[0]),
+	                Integer.parseInt(faceIndices[2].split("/")[0]), Integer.parseInt(faceIndices[3].split("/")[0])};
+	        if (hasNormals) {
+	            int[] normalIndicesArray = new int[3];
+	            normalIndicesArray[0] = Integer.parseInt(faceIndices[1].split("/")[2]);
+	            normalIndicesArray[1] = Integer.parseInt(faceIndices[2].split("/")[2]);
+	            normalIndicesArray[2] = Integer.parseInt(faceIndices[3].split("/")[2]);
+	            return new Face(vertexIndicesArray, normalIndicesArray);
+	        } else {
+	            return new Face((vertexIndicesArray));
+	        }
+	    }
 	
 }
 

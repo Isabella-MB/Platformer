@@ -34,9 +34,10 @@ public class Game {
 //			Display.setTitle(currentState.getClass().getSimpleName());
 			Display.create();
 
+			Display.setVSyncEnabled(true);//ensures that image is fully drawn before drawing next frame
 			
 		//if(Mouse.isGrabbed() && Mouse.isInsideWindow())
-			Mouse.setGrabbed(true); //removes the mouse from the screen. When running the program(pressing the green and white arrow in eclipse), be sure to move the mouse away from the button, otherwise each click the user makes will cause the program to restart 
+			//Mouse.setGrabbed(true); //removes the mouse from the screen. When running the program(pressing the green and white arrow in eclipse), be sure to move the mouse away from the button, otherwise each click the user makes will cause the program to restart 
 			
 		 
 		    

@@ -125,8 +125,7 @@ public class OBJLoader {
   
     		return new Vector3f(0,0,0);
     	}
-    	
-       
+ 
     }
 
     private static Vector3f parseNormal(String line) {
