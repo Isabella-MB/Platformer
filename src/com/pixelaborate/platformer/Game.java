@@ -4,7 +4,9 @@ import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.GL_VERSION;
 import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glGetString;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
@@ -30,7 +32,7 @@ public class Game {
 
 			System.setProperty ("org.lwjgl.opengl.Window.undecorated" , "true" ) ;
 
-			Display.setDisplayMode(new DisplayMode(700, 520));
+			Display.setDisplayMode(new DisplayMode(1280, 720));
 //			Display.setTitle(currentState.getClass().getSimpleName());
 			Display.create();
 
@@ -43,10 +45,12 @@ public class Game {
 		    
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity(); 
-			glOrtho((float)0, (float)700, (float)520, (float)0,(float) 1, (float)-1);
+			glOrtho((float)0, (float)1280, (float)720, (float)0,(float) 1, (float)-1);
 			glMatrixMode(GL_MODELVIEW);
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			
+			
 			
 			currentState = new MenuState(this);
 		}

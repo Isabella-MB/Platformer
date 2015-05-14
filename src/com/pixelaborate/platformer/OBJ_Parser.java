@@ -95,9 +95,10 @@ public class OBJ_Parser {
 
 			default:
 
-				//throw new RuntimeException("Line " + lineCount + " Cannot be parsed:" + line);
+				//System.out.println("Line " + lineCount + " Cannot be parsed:" + line);
 
 			}
+			lineCount++;
 			//System.out.println(lineCount++);
 		}
 		r.close();

@@ -1,10 +1,48 @@
 package com.pixelaborate.platformer;
 
+import static org.lwjgl.opengl.GL11.GL_BACK;
+
+import static org.lwjgl.opengl.GL11.GL_COLOR_ARRAY;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_COLOR_MATERIAL;
+import static org.lwjgl.opengl.GL11.GL_COMPILE;
+import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_DIFFUSE;
+import static org.lwjgl.opengl.GL11.GL_FILL;
+import static org.lwjgl.opengl.GL11.GL_FRONT_AND_BACK;
+import static org.lwjgl.opengl.GL11.GL_LIGHT0;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.GL_LIGHT_MODEL_AMBIENT;
+import static org.lwjgl.opengl.GL11.GL_LINE;
+import static org.lwjgl.opengl.GL11.GL_POSITION;
+import static org.lwjgl.opengl.GL11.GL_SMOOTH;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.GL_VERTEX_ARRAY;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glCallList;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glColor3f;
+import static org.lwjgl.opengl.GL11.glColorMaterial;
+import static org.lwjgl.opengl.GL11.glCullFace;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnableClientState;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glEndList;
+import static org.lwjgl.opengl.GL11.glGenLists;
+import static org.lwjgl.opengl.GL11.glLight;
+import static org.lwjgl.opengl.GL11.glLightModel;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glNewList;
+import static org.lwjgl.opengl.GL11.glNormal3f;
+import static org.lwjgl.opengl.GL11.glPolygonMode;
+import static org.lwjgl.opengl.GL11.glShadeModel;
+import static org.lwjgl.opengl.GL11.glVertex3f;
+import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL12.*;
 
 import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,14 +52,6 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL30;
-import org.lwjgl.opengl.GL11.*;
-import org.lwjgl.opengl.GL12.*;
-import org.lwjgl.opengl.GL13.*;
-import org.lwjgl.opengl.GL15.*;
-import org.lwjgl.opengl.GL30.*;
-import org.lwjgl.opengl.GL31.*;
-import org.lwjgl.opengl.GL41.*;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -45,8 +75,11 @@ public class Model {
 	private float[] fVertices;
 	private float[] norms;
 	private int VBID;
+	private int IBID;
+	private int CBID;
 	private FloatBuffer f;
 	private FloatBuffer n;
+	private FloatBuffer c;
 
 	private static Camera camera;
 
@@ -155,7 +188,7 @@ public class Model {
 
 		//Render model here
 		
-		renderVBOModel();
+		renderModel();
 
 
 
@@ -175,16 +208,7 @@ public class Model {
 
 	}
 
-	public void renderVBOModel() {
-		 glEnableClientState(GL_VERTEX_ARRAY);
-		// glBindBuffer(GL_ARRAY_BUFFER, VBID);
-		 glVertexPointer(3, GL_FLOAT, 0, 0);
-
-		 GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, f.capacity());
-		// glDrawRangeElements(GL_TRIANGLES, 0, f.capacity(), f.capacity(),
-               //  GL_UNSIGNED_INT, 0);
-
-	}
+	
 	public void prepareModel() {
 
 
@@ -232,6 +256,10 @@ public class Model {
 
 
 	public void prepareVBOModel() {
+		//VBID = createVBOID();
+		
+		
+		
 		fVertices = new float[(vertices.size()*3)];
 		System.out.println((vertices.size()*3));
 		System.out.println((vertices.size()*3)-3);
@@ -253,60 +281,64 @@ public class Model {
 
 
 		f = BufferUtils.createFloatBuffer(fVertices.length);
-
+		VBID = GL15.glGenBuffers();
+		System.out.println(VBID);
 		f.put(fVertices);
 		f.flip();
-		System.out.println(f.toString());
+		
 		
 		n = BufferUtils.createFloatBuffer(norms.length);
+		IBID = GL15.glGenBuffers();
+		
 		n.put(norms);
 		n.flip();
-		System.out.println(n.toString());
+		
+		c = BufferUtils.createFloatBuffer(fVertices.length);
+		CBID = GL15.glGenBuffers();
+		n.put(fVertices);
+		n.flip();
+		
+		
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, VBID);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, f, GL15.GL_STATIC_DRAW);
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+		
+		//GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, CBID);
+		//GL15.glBufferData(GL15.GL_ARRAY_BUFFER, c, GL15.GL_STATIC_DRAW);
+		
+		//GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, IBID);
+		//GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, n, GL15.GL_STATIC_DRAW);
+		//GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
 
-
-		VBID = createVBOID();
 	
-		vertexBufferData(VBID, f);
 		
 
 	}
 
+	public void renderVBOModel() {
+		glColor3f(1.0f, 1.0f, 1.0f);
+		
+		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+	    GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, VBID);
+	    GL11.glVertexPointer(3, GL11.GL_FLOAT, 0, 0);
+	     
+	   // GL11.glEnableClientState(GL11.GL_COLOR_ARRAY);
+	  //  GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, CBID);
+	    //GL11.glColorPointer(4, GL11.GL_FLOAT, 0, 0);
 
-	public static int createVBOID() {
-		IntBuffer buffer = BufferUtils.createIntBuffer(1);
-		GL15.glGenBuffers(buffer);
-		return GL15.glGenBuffers();
+	    //GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, IBID);
+	   // GL11.glDrawElements(GL11.GL_TRIANGLES, fVertices.length, GL11.GL_UNSIGNED_INT, 0);
+	    GL11.glDrawArrays(GL_TRIANGLES, 0, fVertices.length);
+	    GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
+	   // GL11.glDisableClientState(GL11.GL_COLOR_ARRAY);
+	
+	
 	}
-
-	public static void vertexBufferData(int id, FloatBuffer buffer) { //Not restricted to FloatBuffer
-		
-		int vaoID = GL30.glGenVertexArrays();
-		GL30.glBindVertexArray(vaoID);
-		//glEnableVertexAttribArray(0);
-
-		//glBindBuffer(GL_ARRAY_BUFFER, vboID);
-		//glVertexAttribPointer(0, 2, GL_FLOAT, false, 0, 0);
-
-		//glBindBuffer(GL_ARRAY_BUFFER, 0);
-		//glBindVertexArray(0);
-		
-		glEnableClientState(GL_VERTEX_ARRAY);
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, id); //Bind buffer (also specifies type of buffer)
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW); //Send up the data and specify usage hint.
-		
-	}
-
-	public static void indexBufferData(int id, FloatBuffer buffer) { //Not restricted to IntBuffer
-		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, id);
-		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
-		
-	}
-
 
 	public static void checkInput() {
 		//change these values to increase or decrease speed of camera and mouse
 		 camera.processMouse(1, 80, -80);
-	        camera.processKeyboard(60, 1, 1, 1);
+	        camera.processKeyboard(60, 1, 1, 1);//change this to change camera speed
 	        glLight(GL_LIGHT0, GL_POSITION, BufferTools.asFlippedFloatBuffer(lightPosition));
 	        if (Keyboard.isKeyDown(Keyboard.KEY_G)) {
 	            lightPosition = new float[]{camera.x(), camera.y(), camera.z(), 1};
@@ -337,9 +369,7 @@ public class Model {
 	        glCullFace(GL_BACK);
 	        glEnable(GL_COLOR_MATERIAL);
 	        glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-	    }
-
-
+	 }
 }
 
 

@@ -15,16 +15,18 @@ public class Entity {
 	
 	//private Sphere s;
 	private Model m;
-	private Model c;
+	private Map c;
+	private Camera cam;
 	
 	public Entity() {
 		//s = new Sphere();
-		
-		
-		OBJ_Parser p = new OBJ_Parser("res/models/AUD_R8.obj");
-		 m = p.parseOBJ();
-		 m.prepareVBOModel();
+		cam = new Camera();
+		cam.makeProjection();
+		OBJ_Parser p = new OBJ_Parser("res/models/Aud_R8.obj");
+		// m = p.parseOBJ();
+		 //m.prepareModel();
 		 
+		 c = new Map("res/images/temperate.png");
 		// OBJ_Parser l = new OBJ_Parser("res/models/Aud_R8.obj");
 		// c = l.parseOBJ();
 		// c.prepareModel();
@@ -32,12 +34,12 @@ public class Entity {
 	}
 
 	public void update() {
-
+		cam.update();
 	}
 
 	public void input() {
 
-		Model.checkInput();//temporarily here to control camera
+		//Model.checkInput();//temporarily here to control camera
 		
 		
 	}
@@ -51,8 +53,8 @@ public class Entity {
 //		
 //		drawSphere(10);
 		
-		m.render();
-		//c.render();
+		//m.render();
+		c.render();
 	}
 	
 	

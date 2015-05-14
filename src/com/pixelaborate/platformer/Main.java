@@ -1,5 +1,8 @@
 package com.pixelaborate.platformer;
 
+import static org.lwjgl.opengl.GL11.GL_VERSION;
+import static org.lwjgl.opengl.GL11.glGetString;
+
 
 
 
@@ -12,6 +15,7 @@ public class Main {
 		Game game1 = new Game();
 		game1.run();
 		
+			
 		//OBJ_Parser b = new OBJ_Parser("res/models/Rock.obj");
 		
 		//Model m = b.parseOBJ();
