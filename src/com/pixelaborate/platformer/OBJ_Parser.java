@@ -13,27 +13,27 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class OBJ_Parser {
 
-	public String path;
-	public final static String VERTEX_TEXTURE = "vt";
-	public final static String VERTEX_NORMAL = "vn";
-	public final static String FACE = "f";
-	public final static String VERTEX = "v";
-	public final static String COMMENT = "#";
-	private static BufferedReader r;
+	public String path;//path of file
+	public final static String VERTEX_TEXTURE = "vt";//texture coordinate
+	public final static String VERTEX_NORMAL = "vn";//normal
+	public final static String FACE = "f";//face
+	public final static String VERTEX = "v";//vertex
+	public final static String COMMENT = "#";//comment
+	private static BufferedReader r;//reader used to parse .obj to model
 
 	public OBJ_Parser(String p) {
 		path = p;
 	}
 
 	public OBJ_Parser() {
-		path = "res/models/lumberJack.obj";
+		path = "res/models/lumberJack.obj";//default model, but should be specified when class is created with other constructor
 	}
 
 
 	public Model parseOBJ() {
 
-		try {
-		return parseFile(new File(path));
+		try {//needs to be in try catch to prevent errors
+			return parseFile(new File(path));
 		}
 
 		catch(Exception e) {
@@ -44,11 +44,11 @@ public class OBJ_Parser {
 	}
 
 
-	public Model parseOBJ(String p) throws Exception{
+	public Model parseOBJ(String p) throws Exception{//when passed the string of the file, it will parse it
 
 
 		try {
-		return parseFile(new File(p));
+			return parseFile(new File(p));
 		}
 
 		catch(Exception e) {
@@ -56,10 +56,10 @@ public class OBJ_Parser {
 			e.printStackTrace();
 		}
 		return new Model();
-		
+
 	}
 
-	public Model parseFile(File f) throws IOException {
+	public Model parseFile(File f) throws IOException { //the meat of the class
 		r = new BufferedReader(new FileReader (f));
 		Model m = new Model();
 		String line;
@@ -67,7 +67,7 @@ public class OBJ_Parser {
 
 		while ((line = r.readLine()) != null) {
 			String type = line.split(" ")[0];
-			switch (type) {
+			switch (type) {// does different things for different cases
 			case COMMENT: 
 				//unless comments need to be read, this can be left blank
 
@@ -88,10 +88,10 @@ public class OBJ_Parser {
 				m.getVertices().add(parseVertex(line));
 				break;
 
-				case FACE:
+			case FACE:
 
-					m.addFace(parseFace(m.hasNormals(), line));
-					break;
+				m.addFace(parseFace(m.hasNormals(), line));
+				break;
 
 			default:
 
@@ -105,36 +105,36 @@ public class OBJ_Parser {
 		return m;
 	}
 
-	public static Vector3f parseVertex(String line) {
+	public static Vector3f parseVertex(String line) {//returns a vector of the vertex
 		String[] XYZ = line.split(" ");
 		return new Vector3f(Float.valueOf(XYZ[1]), Float.valueOf(XYZ[2]), Float.valueOf(XYZ[3]));
 	}
 
-	public static Vector3f parseNormal(String line) {
+	public static Vector3f parseNormal(String line) {//returns a vector of the normal
 		String[] XYZ = line.split(" ");
 		return new Vector3f(Float.valueOf(XYZ[1]), Float.valueOf(XYZ[2]), Float.valueOf(XYZ[3]));
 	}
 
-	public static Vector2f parseTextureCoordinate(String line) {
+	public static Vector2f parseTextureCoordinate(String line) { //returns a vector of the texture coordinate
 		String[] XY = line.split(" ");
 		return new Vector2f(Float.valueOf(XY[1]), Float.valueOf(XY[2]));
 	}
-	
-	
-	 private static Face parseFace(boolean hasNormals, String line) {
-	        String[] faceIndices = line.split(" ");
-	        int[] vertexIndicesArray = {Integer.parseInt(faceIndices[1].split("/")[0]),
-	                Integer.parseInt(faceIndices[2].split("/")[0]), Integer.parseInt(faceIndices[3].split("/")[0])};
-	        if (hasNormals) {
-	            int[] normalIndicesArray = new int[3];
-	            normalIndicesArray[0] = Integer.parseInt(faceIndices[1].split("/")[2]);
-	            normalIndicesArray[1] = Integer.parseInt(faceIndices[2].split("/")[2]);
-	            normalIndicesArray[2] = Integer.parseInt(faceIndices[3].split("/")[2]);
-	            return new Face(vertexIndicesArray, normalIndicesArray);
-	        } else {
-	            return new Face((vertexIndicesArray));
-	        }
-	    }
-	
+
+
+	private static Face parseFace(boolean hasNormals, String line) { //returns a face
+		String[] faceIndices = line.split(" "); //split line of .obj file at spaces
+		int[] vertexIndicesArray = {Integer.parseInt(faceIndices[1].split("/")[0]),
+				Integer.parseInt(faceIndices[2].split("/")[0]), Integer.parseInt(faceIndices[3].split("/")[0])};
+		if (hasNormals) {// if face has normals, return a face with normals, otherwise return a face without normals
+			int[] normalIndicesArray = new int[3];
+			normalIndicesArray[0] = Integer.parseInt(faceIndices[1].split("/")[2]);
+			normalIndicesArray[1] = Integer.parseInt(faceIndices[2].split("/")[2]);
+			normalIndicesArray[2] = Integer.parseInt(faceIndices[3].split("/")[2]);
+			return new Face(vertexIndicesArray, normalIndicesArray);
+		} else {
+			return new Face((vertexIndicesArray));
+		}
+	}
+
 }
 

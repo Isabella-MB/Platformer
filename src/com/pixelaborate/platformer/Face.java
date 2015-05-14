@@ -1,9 +1,9 @@
 package com.pixelaborate.platformer;
 
-import utility.Model.Material;
+
 
 public class Face {
-	private final int[] vertexIndices = {-1, -1, -1};
+	private final int[] vertexIndices = {-1, -1, -1};//default values that will be changed
 	private final int[] normalIndices = {-1, -1, -1};
 	private final int[] textureCoordinateIndices = {-1, -1, -1};
 	/**
@@ -33,6 +33,7 @@ public class Face {
 		return textureCoordinateIndices[0] != -1;
 	}
 
+	//different constructors for different situations
 	public Face(int[] vertexIndices) {
 		this.vertexIndices[0] = vertexIndices[0];
 		this.vertexIndices[1] = vertexIndices[1];

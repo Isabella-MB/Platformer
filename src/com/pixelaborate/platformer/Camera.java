@@ -46,7 +46,6 @@ public class Camera {
 			glTranslatef(0, 0, -10f);
 		if(Keyboard.isKeyDown(Keyboard.KEY_UP))
 			glTranslatef(0, 0, 10f);
-		
 		if(Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
 			glRotatef(1, -1, 0, 0);
 		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))

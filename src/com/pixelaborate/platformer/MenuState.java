@@ -51,9 +51,9 @@ public class MenuState extends GameState {
 
 
 		glBegin(GL11.GL_TRIANGLES);
-		glVertex2d(Mouse.getX(), 520-Mouse.getY());
-		glVertex2d(Mouse.getX()-5, 520-Mouse.getY() + 20);
-		glVertex2d(Mouse.getX()+5, 520-Mouse.getY() + 20);
+		glVertex2d(Mouse.getX(), 720-Mouse.getY());
+		glVertex2d(Mouse.getX()-5, 720-Mouse.getY() + 20);
+		glVertex2d(Mouse.getX()+5, 720-Mouse.getY() + 20);
 		glEnd();
 		
 //		glBegin(GL11.GL_QUADS);
@@ -94,7 +94,7 @@ public class MenuState extends GameState {
 				
 				img.bind();
 				img.setTexture(texture);
-				img.draw(250, 200);
+				img.draw(530, 300);
 				
 				
 				
@@ -117,7 +117,7 @@ public class MenuState extends GameState {
 
 
 	public void didClickGreenBox() {
-		if (((Mouse.getX() >= 250) && (Mouse.getX() <= 450)) && ((Mouse.getY() >= 222) && (Mouse.getY() <= 322))) {
+		if (((Mouse.getX() >= 530) && (Mouse.getX() <= 730)) && ((Mouse.getY() >= 300) && (Mouse.getY() <= 400))) {
 			System.out.println("the mouse is in the box");
 			if (Mouse.isButtonDown(0)) {
 				System.out.println("left click");
